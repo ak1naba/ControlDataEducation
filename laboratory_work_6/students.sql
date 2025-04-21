@@ -92,3 +92,43 @@ create table temp_students (
 
 INSERT into temp_students 
 select * from students
+
+-- Вставка новых статусов
+INSERT INTO temp_student_statuses(
+	status_name)
+	VALUES ('академический отпуск'),
+			('переведн в другой ВУЗ');
+
+-- Результат выборки до обновления
+SELECT
+    temp_students.id_student,
+    temp_students.student_name,
+    temp_students.birthdate,
+    temp_students.contact_number,
+    temp_students.form_education,
+    temp_students.status_id,
+    temp_students.profile_id,
+    temp_students.created_at,
+    temp_students.updated_at,
+    temp_students.address,
+	temp_student_statuses.id_status,
+	temp_student_statuses.status_name
+FROM
+    temp_students
+JOIN
+    temp_student_statuses
+ON
+    temp_students.status_id = temp_student_statuses.id_status;
+
+-- Обновление 
+UPDATE temp_students
+SET status_id = (
+    SELECT id_status
+    FROM temp_student_statuses
+    WHERE status_name = 'академический отпуск'
+)
+WHERE status_id = (
+    SELECT id_status
+    FROM temp_student_statuses
+    WHERE status_name = 'обучается'
+);
