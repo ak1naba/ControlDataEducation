@@ -83,12 +83,24 @@ create table temp_students (
 	contact_number VARCHAR(20) NOT NULL
         CHECK (contact_number ~ '^\+7 \([0-9]{3}\) [0-9]{3} [0-9]{2} [0-9]{2}$'),
 	form_education types_education NOT NULL,
-	status_id INTEGER NOT NULL,
-	profile_id INTEGER NOT NULL,
+	status_id INTEGER NULL,
+	profile_id INTEGER NULL,
 	created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now(),
 	address VARCHAR(255) NOT NULL
 );
+
+-- Обновленные внешние ключи
+
+ALTER TABLE temp_students
+ADD CONSTRAINT fk_student_status
+FOREIGN KEY (status_id) REFERENCES temp_student_statuses (id_status)
+ON DELETE SET NULL;
+
+ALTER TABLE temp_students
+ADD CONSTRAINT fk_student_profile
+FOREIGN KEY (profile_id) REFERENCES temp_profiles (id_profile)
+ON DELETE SET NULL;
 
 INSERT into temp_students 
 select * from students
