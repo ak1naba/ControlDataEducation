@@ -68,7 +68,7 @@ ORDER BY
 
 -- Студенты по направлению ИС
 SELECT id_student, student_name, birthdate, contact_number, form_education, status_id, profile_id, created_at, updated_at, address
-FROM public.temp_students
+FROM temp_students
 WHERE profile_id = (
     SELECT id_profile
     FROM temp_profiles
@@ -77,7 +77,7 @@ WHERE profile_id = (
 
 -- Сутденты по напрвлению экномика
 SELECT id_student, student_name, birthdate, contact_number, form_education, status_id, profile_id, created_at, updated_at, address
-FROM public.temp_students
+FROM temp_students
 WHERE profile_id = (
     SELECT id_profile
     FROM temp_profiles
