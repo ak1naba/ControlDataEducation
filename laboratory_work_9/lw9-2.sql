@@ -57,3 +57,26 @@ CREATE TABLE Stud.STUDENT (
 CREATE USER ns WITH PASSWORD 'your_password';
 ALTER ROLE ns SET search_path TO public;
 SHOW search_path;
+
+-- Задание 9.14. Добавьте этого пользователя в роль
+-- db_datareader. Это можно сделать через графический
+-- интерфейс или с помощью системной хранимой процедуры
+-- sp_addrolemember, первым параметром которой будет имя
+-- роли, а вторым – имя пользователя
+CREATE ROLE db_datareader;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO db_datareader;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA Stud TO db_datareader;
+
+GRANT db_datareader TO ns;
+
+-- Задание 9.15. Создайте новую роль уровня базы данных
+-- и добавьте ей разрешение на удаление (DELETE), изменение
+-- (UPDATE) и добавление данных (INSERT) в объекты схемы
+-- Stud. Добавьте нашего пользователя к этой роли. 
+
+CREATE ROLE db_datawriter;
+GRANT DELETE, UPDATE, INSERT ON ALL TABLES IN SCHEMA Stud TO db_datawriter;
+GRANT db_datawriter TO ns;
+
